@@ -1,68 +1,257 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+        <title>Angular 2, an Introduction</title>
+        <link rel="icon" href="img/32x32-favicon.png" type="image/x-icon" />
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/codezilla.css">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/codezilla.css">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>
-					<h1>Angular 2<br /><small>Introduction</small></h1>
-				</section>
-				<section>
-					<h1>Rewrite</h1>
-					<h2 class="fragment">From the ground up</h2>
-				</section>
-				<section>
-					<p>Het web is veranderd, Angular moet mee</p>
-					<aside class="notes">
-						<p>De principes van Angular zijn meer dan 5 jaar oud, het web is enorm veranderd in de tussentijd</p>
-						<ul>
-							<li>Npm</li>
-							<li>Node</li>
-							<li>ES6</li>
-							<li>Build tools</li>
-						</ul>
-					</aside>
-				</section>
-			</div>
-		</div>
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>Angular 2<br /><small>Introduction</small></h1>
+                </section>
+                <section>
+                    <h1>Rewrite</h1>
+                    <h2 class="fragment">From the ground up</h2>
+                </section>
+                <section>
+                    <p>Het web is veranderd, Angular moet mee</p>
+                    <aside class="notes">
+                        <p>De principes van Angular zijn meer dan 5 jaar oud, het web is enorm veranderd in de tussentijd</p>
+                        <ul>
+                            <li>Npm</li>
+                            <li>Node</li>
+                            <li>ES6</li>
+                            <li>Build tools</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section data-background-color="#353130">
+                    <img class="plain stretch" src="img/ngProperties.png">
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    Properties <pre><code data-trim><input [value] ="firstName"></code></pre>
+                    Events <pre><code data-trim><button (click)​="buy($event)">Click me!</button></code></pre>
+                    “Two-way” <pre><code data-trim><input [(ngModel​)]="userName"></code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>Geheugensteuntje
+                                <ul>
+                                    <li>Functies roep je aan met haakjes: ()</li>
+                                    <li>Properties roep je aan met blokhaken: []</li>
+                                    <li>Two way binding is een combinatie, iets minder logisch :)</li>
+                                </ul>
+                            </li>
+                            <li>Niet meer nadenken over ngPrefix, standaard properties gebruiken</li>
+                            <li>Moet ik hier nou ngValue of value gebruiken? In ng2 is het altijd value</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    <span class="fragment" data-fragment-index="1">
+                        <span class="fragment strike" data-fragment-index="4">Controllers</span>
+                    </span>
+                    <span class="fragment" data-fragment-index="2">
+                         &nbsp;&middot;&nbsp; <span class="fragment strike" data-fragment-index="5">Directives</span>
+                    </span>
+                    <span class="fragment" data-fragment-index="3">
+                         &nbsp;&middot;&nbsp; <span class="fragment strike" data-fragment-index="6">Scopes</span>
+                    </span>
+                    <h2 class="fragment" data-fragment-index="7">Components</h2>
+                    <aside class="notes">
+                        <ul>
+                            <li>Geen twijfel meer mogelijk in keuze maken</li>
+                            <li>Ng1:
+                                <ul>
+                                    <li>Zou ik hier niet beter een directive kunnen gebruiken?</li>
+                                    <li>Werkt niet in combi met router...</li>
+                                    <li>ngController is makkelijker</li>
+                                    <li>Maar directive heeft meer opties</li>
+                                </ul>
+                            </li>
+                            <li>Ng2: <u><strong>altijd</strong></u> component!</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    <pre class="col" data-transition="slide"><code class="javascript stretch" data-trim data-noescape>
+Todo.$inject = [];
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+/* @ngInject */
+function Todo() {
 
-		<script>
-			// More info https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				history: true,
+    var directive = {
+<span class="fragment highlight-green" data-fragment-index="3">        scope: {},
+        restrict: 'E',
+        templateUrl: 'todos/todo.html',
+        controller: TodoController,
+        controllerAs: 'vm'
+</span>    };
 
-				// More info https://github.com/hakimel/reveal.js#dependencies
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'socket.io/socket.io.js', async: true },
-					{ src: 'plugin/notes-server/client.js', async: true }	]
-			});
-		</script>
-	</body>
+    return directive;
+}
+
+TodoController.$inject = [];
+
+/* @ngInject */
+function TodoController() {
+    var vm = this;
+
+    vm.label = '';
+
+<span class="fragment highlight-green" data-fragment-index="5">    vm.todos = [{
+        label: 'Foo',
+        complete: false
+    }];
+</span>
+<span class="fragment highlight-green" data-fragment-index="7">    vm.deleteItem = function (index) {
+        this.todos.splice(index, 1);
+    };
+</span>}
+                    </code></pre>
+
+                    <pre class="col"><code class="javascript stretch" data-noescape>
+app.TodoComponent =
+    ng.core.Component({
+<span class="fragment highlight-green" data-fragment-index="4">        selector: 'todo',
+        templateUrl: 'todos/todo.html'
+</span>    })
+    .Class({
+        constructor: function () {
+            this.label = '';
+<span class="fragment highlight-green" data-fragment-index="6">            this.todos = [{
+                label: 'Foo',
+                complete: false
+            }];
+</span>        },
+<span class="fragment highlight-green" data-fragment-index="8">        deleteItem: function (index) {
+            this.todos.splice(index, 1);
+        }
+</span>    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre class="col" data-transition="slide"><code class="html stretch" data-trim data-noescape>
+&lt;div class="todo"&gt;
+  &lt;form ng-submit="vm.onSubmit($event);"&gt;
+    &lt;h3&gt;Todo List: ({{ vm.getIncomplete() }}
+      of {{ vm.todos.length }})&lt;/h3&gt;
+    &lt;div class="todo__fields"&gt;
+      &lt;input ng-model="vm.label" class="todo__input"&gt;
+      &lt;button type="submit" class="todo__submit"&gt;
+        Add &lt;i class="fa fa-check-circle"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+  &lt;ul class="todo__list"&gt;
+    &lt;li ng-repeat="item in vm.todos"
+      ng-class="{'todo__list--complete':item.complete}"&gt;
+      &lt;input type="checkbox"
+           ng-model="item.complete"&gt;
+      &lt;p&gt;{{ item.label }}&lt;/p&gt;
+      &lt;span ng-click="vm.deleteItem($index);"&gt;
+        &lt;i class="fa fa-times-circle"&gt;&lt;/i&gt;
+      &lt;/span&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+                    </code></pre>
+
+                    <pre class="col"><code class="htmlbars stretch" data-trim data-noescape>
+&lt;div class="todo"&gt;
+  &lt;form (submit)="onSubmit($event);"&gt;
+    &lt;h3&gt;Todo List: ({{ getIncomplete() }}
+      of {{ todos.length }})&lt;/h3&gt;
+    &lt;div class="todo__fields"&gt;
+      &lt;input [(ngModel)]="label" class="todo__input"&gt;
+      &lt;button type="submit" class="todo__submit"&gt;
+        Add &lt;i class="fa fa-check-circle"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+  &lt;ul class="todo__list"&gt;
+    &lt;li *ngFor="#item of todos; #i = index"
+      [class.todo__list--complete]="item.complete"&gt;
+      &lt;input type="checkbox"
+           [(ngModel)]="item.complete"&gt;
+      &lt;p [title]="item.label"&gt;{{ item.label }}&lt;/p&gt;
+      &lt;span (click)="deleteItem(i);"&gt;
+        &lt;i class="fa fa-times-circle"&gt;&lt;/i&gt;
+      &lt;/span&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+                    </code></pre>
+                </section>
+            </div>
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // More info https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                history: true,
+
+                width: '100%',
+                height: '100%',
+                margin: 0.05,
+
+                // More info https://github.com/hakimel/reveal.js#dependencies
+                dependencies: [
+                    { src: 'plugin/markdown/marked.js' },
+                    { src: 'plugin/markdown/markdown.js' },
+                    { src: 'plugin/notes/notes.js', async: true },
+                    { src: 'plugin/highlight/highlight.js', async: true,
+                        callback: function() {
+                            hljs.configure({
+
+                            });
+                            hljs.initHighlightingOnLoad();
+                        }
+                    },
+                    { src: 'socket.io/socket.io.js', async: true },
+                    { src: 'plugin/notes-server/client.js', async: true }	]
+            });
+        </script>
+    </body>
 </html>

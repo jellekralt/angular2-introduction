@@ -47,3 +47,15 @@ section.has-light-background {
 // Theme template ------------------------------
 @import "../template/theme";
 // ---------------------------------------------
+
+// Column blocks for code blocks
+.reveal pre.col {
+	width: 47%;
+	height: 100%;
+	margin: 0 1%;
+	float: left;
+}
+
+.reveal .slides section .fragment.highlight-green.visible {
+	background-color: rgba(255, 255, 255, 0.3)
+}
