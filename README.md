@@ -1,10 +1,13 @@
 # Angular 2 Introduction
 Based on Reveal.js, a framework for easily creating beautiful presentations using HTML.
 
-
 ## Download
-
 Download the PDF version [HERE](https://raw.githubusercontent.com/jellekralt/angular2-introduction/master/export/Angular2-Introduction.pdf)
+
+## Read more on the subject
+* [How to migrate an Angular 1 component to Angular 2](https://toddmotto.com/walkthrough-to-migrate-an-angular-1-component-to-angular-2/)
+* [ngUpgrade](http://blog.thoughtram.io/angular/2015/10/24/upgrading-apps-to-angular-2-using-ngupgrade.html)
+* [Angular 2 Docs](https://angular.io/docs/ts/latest/)
 
 ## Full setup
 
