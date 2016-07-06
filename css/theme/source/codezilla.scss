@@ -49,6 +49,9 @@ section.has-light-background {
 // ---------------------------------------------
 
 // Column blocks for code blocks
+.reveal pre.small {
+	width: 60%;
+}
 .reveal pre.col {
 	width: 47%;
 	height: 100%;

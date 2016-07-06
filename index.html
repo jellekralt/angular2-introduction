@@ -44,8 +44,23 @@
                         </ul>
                     </aside>
                 </section>
+                <section>
+                    <h2>Performance</h2>
+                    <aside class="notes">
+                        <ul>
+                            <li>Angular 1 > performance zit aan de max
+                                <ul>
+                                    <li>Het is ok, maar kan beter</li>
+                                    <li>Geen laaghangend fruit meer</li>
+                                </ul>
+                            </li>
+                            <li>4x sneller</li>
+                            <li>Angular 2 > veel ruimte voor verbetering</li>
+                        </ul>
+                    </aside>
+                </section>
                 <section data-background-color="#353130">
-                    <img class="plain stretch" src="img/ngProperties.png">
+                    <img class="plain" src="img/ngProperties.png">
                     <aside class="notes">
                         <ul>
                             <li></li>
@@ -53,9 +68,22 @@
                     </aside>
                 </section>
                 <section>
-                    Properties <pre><code data-trim><input [value] ="firstName"></code></pre>
-                    Events <pre><code data-trim><button (click)​="buy($event)">Click me!</button></code></pre>
-                    “Two-way” <pre><code data-trim><input [(ngModel​)]="userName"></code></pre>
+                    <pre style="height: 100%; font-size: 50px;"><code class="stretch">
+    &lt;my-awesome-directive
+        attr="maybe.an.Expression"
+        attr2="Or just text?"&gt;
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>Wat gebeurt hier?</li>
+                            <li>Kunt geen autocomplete toevoegen aan IDE</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    Properties <pre class="small"><code data-trim><input [value] ="firstName"></code></pre>
+                    Events <pre class="small"><code data-trim><button (click)​="buy($event)">Click me!</button></code></pre>
+                    “Two-way” <pre class="small"><code data-trim><input [(ngModel​)]="userName"></code></pre>
                     <aside class="notes">
                         <ul>
                             <li>Geheugensteuntje
@@ -67,6 +95,21 @@
                             </li>
                             <li>Niet meer nadenken over ngPrefix, standaard properties gebruiken</li>
                             <li>Moet ik hier nou ngValue of value gebruiken? In ng2 is het altijd value</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    <pre style="height: 100%; font-size: 50px;"><code class="stretch">
+    &lt;my-awesome-directive
+        [attr]="an.expr"
+        attr2="Just text">
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>Binnen brackets kan worden behandeld als JS</li>
+                            <li>Autocompletion werkt</li>
+                            <li>Text is gewoon text, wordt niks mee gedaan, niet geevaluate</li>
+                            <li>Performance van template parsing ++</li>
                         </ul>
                     </aside>
                 </section>
@@ -169,13 +212,45 @@ app.TodoComponent =
                 </section>
 
                 <section>
+                    <pre class="col"><code class="javascript stretch">
+.directive('counter', function counter() {
+  return {
+    scope: {},
+    bindToController: {
+      count: '&',
+      someValue: '=',
+      onSomeAction = '&'
+    }
+  };
+});
+                    </code></pre>
+                    <pre class="col"><code class="javascript stretch">
+.Component('counter', {
+  inputs: ['count', 'someValue'],
+  outputs: ['someValue', 'onSomeAction']
+});
+
+
+
+
+
+
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>Dumb components are fully defined by their bindings</li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
                     <pre class="col" data-transition="slide"><code class="html stretch" data-trim data-noescape>
 &lt;div class="todo"&gt;
-  &lt;form ng-submit="vm.onSubmit($event);"&gt;
+  &lt;form <span class="fragment highlight-green" data-fragment-index="2">ng-submit="vm.onSubmit($event);"</span>&gt;
     &lt;h3&gt;Todo List: ({{ vm.getIncomplete() }}
       of {{ vm.todos.length }})&lt;/h3&gt;
     &lt;div class="todo__fields"&gt;
-      &lt;input ng-model="vm.label" class="todo__input"&gt;
+      &lt;input <span class="fragment highlight-green" data-fragment-index="4">ng-model="vm.label"</span> class="todo__input"&gt;
       &lt;button type="submit" class="todo__submit"&gt;
         Add &lt;i class="fa fa-check-circle"&gt;&lt;/i&gt;
       &lt;/button&gt;
@@ -183,10 +258,10 @@ app.TodoComponent =
   &lt;/form&gt;
   &lt;ul class="todo__list"&gt;
     &lt;li ng-repeat="item in vm.todos"
-      ng-class="{'todo__list--complete':item.complete}"&gt;
+      <span class="fragment highlight-green" data-fragment-index="6">ng-class="{'todo__list--complete':item.complete}"</span>&gt;
       &lt;input type="checkbox"
            ng-model="item.complete"&gt;
-      &lt;p&gt;{{ item.label }}&lt;/p&gt;
+      &lt;p <span class="fragment highlight-green" data-fragment-index="8">title="{{ item.label }}"</span>&gt;{{ item.label }}&lt;/p&gt;
       &lt;span ng-click="vm.deleteItem($index);"&gt;
         &lt;i class="fa fa-times-circle"&gt;&lt;/i&gt;
       &lt;/span&gt;
@@ -197,22 +272,22 @@ app.TodoComponent =
 
                     <pre class="col"><code class="htmlbars stretch" data-trim data-noescape>
 &lt;div class="todo"&gt;
-  &lt;form (submit)="onSubmit($event);"&gt;
+  &lt;form <span class="fragment highlight-green" data-fragment-index="3">(submit)="onSubmit($event);</span>"&gt;
     &lt;h3&gt;Todo List: ({{ getIncomplete() }}
       of {{ todos.length }})&lt;/h3&gt;
     &lt;div class="todo__fields"&gt;
-      &lt;input [(ngModel)]="label" class="todo__input"&gt;
+      &lt;input <span class="fragment highlight-green" data-fragment-index="5">[(ngModel)]="label"</span> class="todo__input"&gt;
       &lt;button type="submit" class="todo__submit"&gt;
         Add &lt;i class="fa fa-check-circle"&gt;&lt;/i&gt;
       &lt;/button&gt;
     &lt;/div&gt;
   &lt;/form&gt;
   &lt;ul class="todo__list"&gt;
-    &lt;li *ngFor="#item of todos; #i = index"
-      [class.todo__list--complete]="item.complete"&gt;
+    &lt;li *ngFor="let item of todos; let i = index"
+      <span class="fragment highlight-green" data-fragment-index="7">[class.todo__list--complete]="item.complete"</span>&gt;
       &lt;input type="checkbox"
            [(ngModel)]="item.complete"&gt;
-      &lt;p [title]="item.label"&gt;{{ item.label }}&lt;/p&gt;
+      &lt;p <span class="fragment highlight-green" data-fragment-index="9">[title]="item.label"</span>&gt;{{ item.label }}&lt;/p&gt;
       &lt;span (click)="deleteItem(i);"&gt;
         &lt;i class="fa fa-times-circle"&gt;&lt;/i&gt;
       &lt;/span&gt;
@@ -220,6 +295,41 @@ app.TodoComponent =
   &lt;/ul&gt;
 &lt;/div&gt;
                     </code></pre>
+                </section>
+                <section>
+                    <h2>ngUpgrade</h2>
+
+                    <p class="fragment">&#8594; Voeg ngUpgrade toe</p>
+                    <p class="fragment">&#8594; Schrijf nieuwe Angular 2 components</p>
+                    <p class="fragment">&#8594; Downgrade deze naar Angular 1</p>
+                    <p class="fragment">&#8594; Refactor huidige codebase</p>
+                    <p class="fragment">&#8594; Verwijder ngUpgrade</p>
+
+                    <aside class="notes">
+                        <ul>
+                            <li>ngUpgrade toevoegen</li>
+                            <li>Start met schrijven van ng2 components</li>
+                            <li>Downgrade ng2 components naar ng2</li>
+                            <li>Schrijf bestaande codebase om naar ng2</li>
+                            <li>Verwijder ngUpgrade</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Toekomst...</h2>
+                    <aside class="notes">
+                        <ul>
+                            <li>Release in 2016</li>
+                            <li>Nu op RC4</li>
+                            <li>Komt zeker nog een RC5</li>
+                            <li>Documentation</li>
+                            <li>ngUpgrade</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Bedankt!</h2>
+                    <p>Vragen?</p>
                 </section>
             </div>
         </div>
